@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Do you love me?</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#ffe6ee;
+    font-family:Arial, sans-serif;
+    overflow:hidden;
+}
+
+/* Card */
+.card{
+    position:relative;
+    background:#fff;
+    padding:40px 50px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    text-align:center;
+    min-width:380px;
+}
+
+h1{
+    margin-bottom:30px;
+    font-size:30px;
+}
+
+/* Buttons row */
+.options{
+    display:flex;
+    gap:20px;
+}
+
+/* YES */
+#yes{
+    flex:1;
+    font-size:22px;
+    padding:12px 0;
+    background:#ff4d6d;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* NO */
+#no{
+    flex:1;
+    font-size:22px;
+    padding:12px 0;
+    background:#999;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* Heart */
+#big-heart{
+    position:fixed;
+    inset:0;
+    background:#ff1e56;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:150px;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+    <h1>Do you love me?</h1>
+    <div class="options">
+        <button id="yes">YES</button>
+        <button id="no">NO</button>
+    </div>
+</div>
+
+<script>
+const noBtn  = document.getElementById("no");
+const card   = document.getElementById("card");
+const yesBtn = document.getElementById("yes");
+
+function moveNo(e){
+    e.preventDefault();
+    const cardRect = card.getBoundingClientRect();
+    let x, y;
+
+    do{
+        x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    } while (
+        x > cardRect.left &&
+        x < cardRect.right &&
+        y > cardRect.top &&
+        y < cardRect.bottom
+    );
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top  = y + "px";
+}
+
+// NO يهرب للأبد
+noBtn.addEventListener("mousedown", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+noBtn.addEventListener("click", e => e.preventDefault());
+
+// YES يفتح القلب
+yesBtn.addEventListener("click", ()=>{
+    document.body.innerHTML = "";
+    const heart = document.createElement("div");
+    heart.id = "big-heart";
+    heart.textContent = "❤️";
+    document.body.appendChild(heart);
+});
+</script>
+
+</body>
+</html>
